@@ -1,0 +1,13 @@
+
+# Define the resource to create the App Service Plan
+resource "azurerm_app_service_plan" "appserviceplan" {
+  name                = var.name
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  sku {
+    tier = var.sku_tier
+    size = var.sku_size
+  }
+}
+

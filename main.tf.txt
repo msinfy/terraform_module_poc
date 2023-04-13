@@ -1,0 +1,29 @@
+
+module "resourcegroup" {
+  source         = "./modules/resourcegroup"
+  resource_group_name     = var.resource_group_name
+  location       = var.location
+}
+
+
+# Use the appserviceplan module to create the App Service Plan
+module "appserviceplan" {
+  source              = "./modules/appserviceplan"
+  resource_group_name = "shafi_rg"
+  name                = "shafi-appserviceplan"
+  location = "East US"
+  kind ="Windows"
+  sku_tier            = "Free"
+  sku_size            = "F1" 
+}
+
+# Use the appservice module to create the App Service
+module "appservice" {
+  source              = "./modules/appservice"
+  resource_group_name = "shafi_rg"
+  name                = "shafi9080"
+  location = "East US" 
+  app_service_plan_id = module.appserviceplan.app_service_plan_id
+ 
+}
+
